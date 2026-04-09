@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YAMIN | Artículos Personalizados</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #1a1a1a;
+            --accent-cyan: #00e5ff;
+            --accent-green: #39ff14;
+            --text-white: #ffffff;
+            --card-bg: #2d2d2d;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-blue);
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* --- NAVBAR --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background: rgba(0,0,0,0.8);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--accent-cyan);
+        }
+
+        .logo img { height: auto; }
+
+        .search-bar {
+            flex-grow: 0.5;
+            display: flex;
+            background: #333;
+            border-radius: 5px;
+            padding: auto -300px;
+        }
+
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: white;
+            width: 100%;
+            padding: 5px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover { color: var(--accent-cyan); }
+
+        /* --- SECCIONES --- */
+        .page { display: none; padding: 40px 10%; animation: fadeIn 0.5s ease; }
+        .active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        h1 { text-align: center; font-size: 3rem; text-transform: uppercase; margin-bottom: 10px; }
+        .subtitle { text-align: center; color: #ccc; margin-bottom: 40px; }
+
+        /* --- HOME (PAGINA PRINCIPAL) --- */
+        .hero-banner {
+            background: linear-gradient(rgba(0,229,255,0.1), rgba(0,0,0,0.9));
+            padding: 60px 20px;
+            text-align: center;
+            border-radius: 15px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .feature-card {
+            background: white;
+            color: black;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .favorites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .fav-item {
+            position: relative;
+            height: 250px;
+            background: #444;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .fav-item:hover { border-color: var(--accent-cyan); }
+
+        .whatsapp-btn {
+            background: var(--accent-green);
+            color: black;
+            padding: 15px;
+            text-align: center;
+            display: block;
+            margin: 40px auto;
+            border-radius: 10px;
+            font-weight: bold;
+            width: fit-content;
+            cursor: pointer;
+        }
+
+        /* --- CATALOGO --- */
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .product-col h3 { text-align: center; border-bottom: 2px solid white; padding-bottom: 5px; }
+
+        .img-placeholder {
+            background: #fff;
+            width: 100%;
+            aspect-ratio: 1/1;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+
+        /* --- PERSONALIZAR --- */
+        .custom-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.05);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .btn-group { margin: 20px 0; }
+        .btn-opt {
+            background: #222;
+            border: 1px solid var(--accent-cyan);
+            color: white;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .btn-opt.selected { background: var(--accent-cyan); color: black; }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            background: #333;
+            border: none;
+            color: reen;
+            margin: 20px 0;
+        }
+
+        .btn-preview { background: var(--accent-green); color: black; width: 100%; padding: 15px; border: none; font-weight: bold; margin-bottom: 10px; }
+        .btn-cart-add { background: black; color: white; width: 100%; padding: 15px; border: 1px solid white; cursor: pointer; }
+
+        /* --- CARRITO --- */
+        .cart-item {
+            display: flex;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .cart-summary {
+            background: #004d4d;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .btn-finalizar {
+            background: #cddc39;
+            color: black;
+            width: 100%;
+            padding: 20px;
+            font-weight: bold;
+            font-size: 1.5rem;
+            border: none;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 40px 5%;
+            background: black;
+            font-size: 0.8rem;
+            border-top: 1px solid #333;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">
+            <!-- Mandar a llamar a la imagen -->
+             <img src="Imagenes/YAMIN LOGO METALICO.png"  width="100px" height="100px" alt="logotipo metalico">
+            <h2 style="color:var(--accent-cyan)"></h2>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Busca tu producto (taza, hoodie, etc.)">
+        </div>
+        <div class="nav-links">
+            <a onclick="showPage('home')">Inicio</a>
+            <a onclick="showPage('catalogo')">Catálogo</a>
+            <a onclick="showPage('personalizar')">Personalizar</a>
+            <a onclick="showPage('carrito')">Carrito <i class="fas fa-shopping-cart"></i></a>
+            <a onclick="showPage('faq')">Preguntas</a>
+        </div>
+    </nav>
+
+    <section id="home" class="page active">
+        <div class="hero-banner">
+            <h1>¡DALE VIDA A TUS IDEAS!</h1>
+            <p class="subtitle">Artículos personalizados con tu propio estilo</p>
+            
+            <div class="features">
+                <div class="feature-card">💎 CALIDAD PREMIUM</div>
+                <div class="feature-card">📦 ENVÍOS RÁPIDOS</div>
+                <div class="feature-card">🎨 DISEÑOS ÚNICOS</div>
+            </div>
+
+            <div style="background:rgba(0, 77, 77, 0.5); padding: 30px; border-radius: 15px;">
+                <h3>¿Quiénes Somos?</h3>
+                <p>En YAMIN, no solo imprimimos objetos; materializamos emociones. Somos un estudio creativo nacido para romper la monotonía de los regalos genéricos.</p>
+            </div>
+        </div>
+
+        <h2 style="text-align: center; margin-top: 50px;">NUESTROS FAVORITOS</h2>
+        <div class="favorites-grid">
+            <div class="fav-item"> $199</div>
+            <div class="product-col">
+    <h3 style="">TAZAS</h3>
+    <img src="Imagenes/TAZAS.jpeg"  width="250px" height="250px" alt="taza">
+
+
+</div>
+            <div class="fav-item">PLAYERAS $199</div>
+             <h3>PLAYERAS</h3>
+    <img src="Imagenes/Playera.jpeg"  width="250px" height="250px" alt="playera">
+
+            <div class="fav-item">HOODIES $199</div>
+            <div class="fav-item">LLAVEROS $199</div>
+        </div>
+
+        <div class="whatsapp-btn">¿Necesitas pedidos por mayoreo? WhatsApp</div>
+    </section>
+
+    <section id="catalogo" class="page">
+        <h1>CATÁLOGO</h1>
+        <p class="subtitle">Artículos personalizados con tu propio estilo</p>
+        <div class="catalog-grid">
+            <div class="product-col">
+                <h3>TAZAS</h3>
+                <div class="img-placeholder"></div>
+                <div class="img-placeholder"></div>
+            </div>
+            <div class="product-col">
+                <h3>HOODIES</h3>
+                <div class="img-placeholder"></div>
+                <div class="img-placeholder"></div>
+            </div>
+            <div class="product-col">
+                <h3>PLAYERAS</h3>
+                <div class="img-placeholder"></div>
+                <div class="img-placeholder"></div>
+            </div>
+            <div class="product-col">
+                <h3>LLAVEROS</h3>
+                <div class="img-placeholder"></div>
+                <div class="img-placeholder"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="personalizar" class="page">
+        <h1>PERSONALIZAR</h1>
+        <div class="custom-container">
+            <p>Sube tu foto personalizada (opcional)</p>
+            <input type="file" id="fileInput" style="margin-bottom: 20px;">
+            
+            <h3>Corte:</h3>
+            <div class="btn-group">
+                <button class="btn-opt">Hombre</button>
+                <button class="btn-opt">Mujer</button>
+            </div>
+
+            <h3>Tamaño:</h3>
+            <div class="btn-group">
+                <button class="btn-opt">S</button>
+                <button class="btn-opt">M</button>
+                <button class="btn-opt">L</button>
+                <button class="btn-opt">XL</button>
+            </div>
+
+            <h3>Texto:</h3>
+            <input type="text" placeholder="Tu texto aquí...">
+
+            <button class="btn-preview">Previsualizar</button>
+            <p style="font-size: 0.8rem; color: var(--accent-green);">Entrega Estimada: 20 mar</p>
+            <button class="btn-cart-add">Agregar Al Carrito</button>
+        </div>
+    </section>
+
+    <section id="carrito" class="page">
+        <h1>CARRITO</h1>
+        <div class="cart-item">
+            <div style="width:100px; height:100px; background:#fff; margin-right:20px;"></div>
+            <div style="flex-grow: 1;">
+                <h3 style="color:var(--accent-cyan)">Playera Personalizada</h3>
+                <p>$199.00 mxn</p>
+                <p>Talla: XL / Texto: Ejemplo</p>
+            </div>
+            <button style="background:none; border:1px solid red; color:red; padding:5px 10px;">Borrar</button>
+        </div>
+
+        <div class="cart-summary">
+            <div style="display:flex; justify-content: space-between;">
+                <span>Subtotal</span>
+                <span>$ 199.00 MXN</span>
+            </div>
+            <hr>
+            <div style="display:flex; justify-content: space-between; font-size: 2rem; font-weight: bold;">
+                <span>TOTAL</span>
+                <span>$ 199.00 MXN</span>
+            </div>
+            <p>Envío regular: $99.00 mxn | Envío Express: $149.00 mxn</p>
+        </div>
+
+        <button class="btn-finalizar">🔒 FINALIZAR PEDIDO</button>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <img src="https://via.placeholder.com/300x50?text=Metodos+de+Pago" alt="Pagos">
+        </div>
+    </section>
+
+    <footer>
+        <div style="display:flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+                <strong>LEGAL</strong><br>
+                Aviso de Privacidad<br>
+                Términos y Condiciones<br>
+                Política de No Devolución
+            </div>
+            <div>
+                ©YAMIN | Personalizados | Todos los derechos reservados
+            </div>
+            <div style="text-align: right;">
+                <strong>CONTACTO</strong><br>
+                hola@yamin.com<br>
+                WhatsApp +52 123 456 7890
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            // Ocultar todas las páginas
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Mostrar la página seleccionada
+            document.getElementById(pageId).classList.add('active');
+            
+            // Hacer scroll hacia arriba
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>

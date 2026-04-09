@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YAMIN | Personalizados</title>
+    <style>
+        :root {
+            --bg-dark: #222222; /* Gris oscuro de tu fondo */
+            --header-bg: #000000;
+            --accent-cyan: #00e5ff;
+            --accent-green: #39ff14;
+            --text-white: #ffffff;
+            --footer-bg: #111111;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            font-family: 'Arial Black', Gadget, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* --- NAVBAR (Basada en PANTALLA PRINCIPAL) --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 4%;
+            background: var(--header-bg);
+            border-bottom: 2px solid #003344;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container img {
+            height: 80px; /* Tamaño ajustado para resaltar el logo 3D */
+            width: auto;
+        }
+
+        .search-container {
+            flex-grow: 0.4;
+            display: flex;
+            align-items: center;
+            background: #444;
+            border-radius: 5px;
+            padding: 5px 15px;
+        }
+
+        .search-container input {
+            background: transparent;
+            border: none;
+            color: white;
+            width: 100%;
+            padding: 8px;
+            outline: none;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+
+        .nav-menu a:hover { color: var(--accent-cyan); }
+
+        /* --- ESTRUCTURA DE PÁGINAS --- */
+        .page { display: none; padding: 20px 5%; min-height: 80vh; }
+        .active { display: block; }
+
+        h1.main-title {
+            text-align: center;
+            font-size: 3.5rem;
+            margin: 20px 0 5px 0;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+        }
+
+        /* --- PÁGINA PRINCIPAL (Grid de rectángulos eliminados) --- */
+        .hero-features {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .feature-box {
+            background: #e0f7fa;
+            color: #000;
+            padding: 10px 30px;
+            border-radius: 10px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .about-us {
+            background: rgba(0, 50, 70, 0.6);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto 60px auto;
+            line-height: 1.6;
+        }
+
+        .favorites-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .fav-card {
+            text-align: center;
+            background: #444;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 3px solid transparent;
+            transition: 0.3s;
+        }
+
+        .fav-card img { width: 100%; height: 250px; object-fit: cover; }
+        .fav-card:hover { border-color: var(--accent-cyan); }
+
+        /* --- SECCIÓN CATÁLOGO (Reticula PC) --- */
+        .catalog-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .catalog-col h2 {
+            border-bottom: 3px solid white;
+            text-align: center;
+            padding-bottom: 10px;
+            font-size: 1.8rem;
+        }
+
+        .catalog-col .price { text-align: center; font-size: 0.9rem; display: block; margin-bottom: 15px; }
+
+        .product-img {
+            width: 100%;
+            aspect-ratio: 1/1;
+            background: #333;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+
+        /* --- SECCIÓN PERSONALIZAR --- */
+        .customize-layout {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .btn-group { display: flex; justify-content: center; gap: 10px; margin: 15px 0; }
+
+        .opt-btn {
+            background: #1a237e;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .size-btn {
+            background: #1a237e;
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .input-text {
+            width: 100%;
+            padding: 15px;
+            background: #555;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .btn-action-green { background: var(--accent-green); color: black; padding: 15px; width: 100%; border: none; font-weight: bold; margin: 5px 0; cursor: pointer; }
+        .btn-action-black { background: #000; color: white; padding: 15px; width: 100%; border: 1px solid white; font-weight: bold; cursor: pointer; }
+
+        /* --- CARRITO --- */
+        .cart-container { max-width: 800px; margin: 0 auto; }
+        .cart-item-row {
+            display: flex;
+            background: #333;
+            padding: 20px;
+            border-radius: 10px;
+            align-items: center;
+            gap: 20px;
+            border-bottom: 2px solid var(--accent-cyan);
+        }
+
+        .total-box {
+            background: #004d40;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .btn-finalizar {
+            background: #afb42b;
+            color: black;
+            width: 100%;
+            padding: 20px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            border: none;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            cursor: pointer;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #000;
+            padding: 30px 5%;
+            margin-top: 50px;
+            border-top: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+        }
+
+        .footer-col { line-height: 1.8; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo-container">
+            <img src="logo_yamin.png" alt="YAMIN">
+        </div>
+        <div class="search-container">
+            <span>🔍</span>
+            <input type="text" placeholder="Busca tu producto (taza, hoddie, etc.)">
+        </div>
+        <div class="nav-menu">
+            <a onclick="showPage('home')">INICIO</a>
+            <a onclick="showPage('catalogo')">CATÁLOGO</a>
+            <a onclick="showPage('personalizar')">PERSONALIZAR</a>
+            <a onclick="showPage('carrito')">CARRITO 🛒</a>
+            <a onclick="showPage('faq')">PREGUNTAS FRECUENTES</a>
+        </div>
+    </nav>
+
+    <section id="home" class="page active">
+        <h1 class="main-title">¡DALE VIDA A TUS IDEAS!</h1>
+        <p class="section-subtitle">Artículos personalizados con tu propio estilo</p>
+
+        <div class="hero-features">
+            <div class="feature-box">🏆 CALIDAD PREMIUM</div>
+            <div class="feature-box">🚚 ENVÍOS RÁPIDOS</div>
+            <div class="feature-box">💡 DISEÑOS ÚNICOS</div>
+        </div>
+
+        <div class="about-us">
+            <h2>¿Quienes Somos?</h2>
+            <p>En YAMIN, no solo imprimimos objetos; materializamos emociones. Somos un estudio creativo nacido para romper la monotonia de los regalos genéricos. Creeme que una taza, una playera o un llavero pueden contar una historia, fortalecer una marca o sellar una amistad. Con tecnología de vanguardia y un ojo crítico para el diseño, garantizamos que cada pieza que sale de nuestro taller sea una obra de arte personalizada.</p>
+        </div>
+
+        <h2 style="text-align: center;">NUESTROS FAVORITOS</h2>
+        <div class="favorites-grid">
+            <div class="fav-card">
+                <img src="tazas_fav.png" alt="Tazas">
+                <p>TAZAS $199.00 MXN</p>
+            </div>
+            <div class="fav-card">
+                <img src="playeras_fav.png" alt="Playeras">
+                <p>PLAYERAS $199.00 MXN</p>
+            </div>
+            <div class="fav-card">
+                <img src="hoodies_fav.png" alt="Hoodies">
+                <p>HODDIES $199.00 MXN</p>
+            </div>
+            <div class="fav-card">
+                <img src="llaveros_fav.png" alt="Llaveros">
+                <p>LLAVEROS $199.00 MXN</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="catalogo" class="page">
+        <h1 class="main-title">CATÁLOGO</h1>
+        <p class="section-subtitle">Artículos personalizados con tu propio estilo</p>
+        
+        <div class="catalog-container">
+            <div class="catalog-col">
+                <h2>TAZAS</h2>
+                <span class="price">$199.00 MXN</span>
+                <img src="taza1.png" class="product-img">
+                <img src="taza2.png" class="product-img">
+                <img src="taza3.png" class="product-img">
+            </div>
+            <div class="catalog-col">
+                <h2>HODDIES</h2>
+                <span class="price">$199.00 MXN</span>
+                <img src="hoodie1.png" class="product-img">
+                <img src="hoodie2.png" class="product-img">
+                <img src="hoodie3.png" class="product-img">
+            </div>
+            <div class="catalog-col">
+                <h2>PLAYERAS</h2>
+                <span class="price">$199.00 MXN</span>
+                <img src="playera1.png" class="product-img">
+                <img src="playera2.png" class="product-img">
+                <img src="playera3.png" class="product-img">
+            </div>
+            <div class="catalog-col">
+                <h2>LLAVEROS</h2>
+                <span class="price">$199.00 MXN</span>
+                <img src="llavero1.png" class="product-img">
+                <img src="llavero2.png" class="product-img">
+                <img src="llavero3.png" class="product-img">
+            </div>
+        </div>
+    </section>
+
+    <section id="personalizar" class="page">
+        <h1 class="main-title">PERSONALIZAR</h1>
+        <div class="customize-layout">
+            <p>Sube tu foto personalizada (opcional)</p>
+            <input type="file">
+            
+            <h3>Corte:</h3>
+            <div class="btn-group">
+                <button class="opt-btn">Hombre</button>
+                <button class="opt-btn">Mujer</button>
+            </div>
+
+            <h3>Tamaño:</h3>
+            <div class="btn-group">
+                <button class="size-btn">XS</button>
+                <button class="size-btn">S</button>
+                <button class="size-btn">M</button>
+                <button class="size-btn">L</button>
+                <button class="size-btn">XL</button>
+            </div>
+
+            <input type="text" class="input-text" placeholder="Tu texto aquí...">
+
+            <button class="btn-action-green">Previsualizar</button>
+            <p style="color:var(--accent-green); font-size:0.8rem;">Llega lunes, 16 de marzo con envío express.</p>
+            
+            <button class="btn-action-black">Agregar Al Carrito</button>
+        </div>
+    </section>
+
+    <section id="carrito" class="page">
+        <h1 class="main-title">CARRITO</h1>
+        <div class="cart-container">
+            <div class="cart-item-row">
+                <img src="tu_prenda_personalizada.png" style="width:150px; background:white; border-radius:5px;">
+                <div style="flex-grow:1">
+                    <h2 style="color:var(--accent-cyan)">Playera Personalizada</h2>
+                    <p>$199.00 mxn</p>
+                    <p>Negro/Hombre/XL</p>
+                </div>
+                <button style="color:red; background:none; border:none; cursor:pointer;">Borrar</button>
+            </div>
+
+            <div class="total-box">
+                <div style="display:flex; justify-content:space-between"><span>Subtotal</span><span>$199.00 MXN</span></div>
+                <div style="display:flex; justify-content:space-between; font-size:2.5rem; font-weight:bold; margin-top:10px;">
+                    <span>TOTAL</span><span>$ 199.00 MXN</span>
+                </div>
+                <p style="text-align:center; font-size:0.8rem; margin-top:20px;">Envío regular: $99.00 mxn | Envío Express: $149.00 mxn</p>
+            </div>
+
+            <button class="btn-finalizar">🔒 FINALIZAR PEDIDO</button>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-col">
+            <strong>LEGAL</strong><br>
+            Aviso de Privacidad<br>
+            Términos y Condiciones<br>
+            Política de No Devolución
+        </div>
+        <div class="footer-col" style="text-align:center">
+            ©YAMIN | Personalizados | Todos los derechos reservados
+        </div>
+        <div class="footer-col" style="text-align:right">
+            <strong>CONTACTO</strong><br>
+            hola@yamin.com<br>
+            WhatsApp +52 123 456 7890
+        </div>
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
